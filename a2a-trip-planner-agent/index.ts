@@ -1,7 +1,8 @@
 import express from 'express';
-import { DefaultRequestHandler, InMemoryTaskStore } from '@a2a-js/sdk/server';
+import { DefaultRequestHandler } from '@a2a-js/sdk/server';
 import { UserBuilder, jsonRpcHandler, restHandler } from '@a2a-js/sdk/server/express';
 import { buildAgentCard } from './card.ts';
+import { ExpiringTaskStore } from './taskStore.ts';
 import { TripPlannerExecutor } from './executor.ts';
 
 const PORT = Number(process.env.PORT ?? 3001);
@@ -11,7 +12,7 @@ const agentCard = buildAgentCard(PUBLIC_BASE_URL);
 
 const requestHandler = new DefaultRequestHandler(
   agentCard,
-  new InMemoryTaskStore(),
+  new ExpiringTaskStore(),
   new TripPlannerExecutor()
 );
 

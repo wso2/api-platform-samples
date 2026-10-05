@@ -45,8 +45,8 @@ interface Flight {
 function searchFlights(from: string, to: string): Flight[] {
   const base = seed(from + to);
   return CARRIERS.map((carrier, index) => {
-    // >>> keeps the value unsigned; a signed shift would turn a seed above
-    // 2^31 negative and produce a flight that lands before it leaves.
+    // Unsigned throughout: the seed exceeds 2^31, and the durations derived
+    // from it have to stay positive for an arrival to follow its departure.
     const offset = (base + index * 977) >>> 0;
     const departHour = 6 + (offset % 15);
     const departMinute = (offset % 4) * 15;

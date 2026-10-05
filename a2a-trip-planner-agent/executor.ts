@@ -34,6 +34,19 @@ export class TripPlannerExecutor implements AgentExecutor {
     requestContext: RequestContext,
     eventBus: ExecutionEventBus
   ): Promise<void> => {
+    try {
+      await this.run(requestContext, eventBus);
+    } finally {
+      // The flag belongs to this run, so it is dropped here whatever the run
+      // did: completed, streamed to the end, cancelled, or threw.
+      this.cancelled.delete(requestContext.taskId);
+    }
+  };
+
+  private run = async (
+    requestContext: RequestContext,
+    eventBus: ExecutionEventBus
+  ): Promise<void> => {
     const { taskId, contextId } = requestContext;
 
     // The server rejects a stream that does not open with a task or message.

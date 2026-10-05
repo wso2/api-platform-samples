@@ -114,3 +114,12 @@ a description of the A2A protocol.
 
 **Run a single replica.** Task state is held in memory, so `GetTask` against a
 second replica would miss a task the first one created.
+
+**Tasks are cleared hourly.** The SDK's in-memory store never evicts, so the
+agent replaces it on a timer rather than growing until the container runs out
+of memory. A task survives up to an hour, not a guaranteed hour.
+
+**The agent is public and unauthenticated.** Anyone who can reach it can call
+every operation the SDK implements, including ones the Agent Card does not
+advertise, and all callers share one task bucket. Access control belongs to
+the gateway in front of it, not here.
