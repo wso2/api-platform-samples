@@ -95,6 +95,10 @@ async def process_mcp_config_with_oauth2(mcp_config: Dict[str, Any]) -> Dict[str
             key in oauth2_config and oauth2_config[key] 
             for key in ["client_id", "client_secret", "token_endpoint"]
         ):
+            if  oauth2_config['client_id'] == "" or oauth2_config['client_secret']  == "" or oauth2_config['token_endpoint'] == "":
+                del processed_server["oauth2"]
+                processed_servers[server_name] = processed_server
+                continue
             logger.info(f"Processing OAuth2 authentication for server: {server_name}")
             
             # Get OAuth2 token
@@ -112,6 +116,7 @@ async def process_mcp_config_with_oauth2(mcp_config: Dict[str, Any]) -> Dict[str
                 logger.info(f"OAuth2 token applied to server: {server_name}")
             else:
                 logger.error(f"Failed to get OAuth2 token for server: {server_name}")
+            del processed_server["oauth2"]
         
         processed_servers[server_name] = processed_server
     

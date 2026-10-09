@@ -81,7 +81,7 @@ class HttpConnector(BaseConnector):
 
             try:
                 # Try to initialize - this is where streamable HTTP vs SSE difference should show up
-                await test_client.initialize()
+                #await test_client.initialize()
 
                 # If we get here, streamable HTTP works
 

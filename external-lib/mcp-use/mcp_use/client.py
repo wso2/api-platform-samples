@@ -156,8 +156,8 @@ class MCPClient:
 
         # Create the session
         session = MCPSession(connector)
-        if auto_initialize:
-            await session.initialize()
+        # if auto_initialize:
+        #     await session.initialize()
         self.sessions[server_name] = session
 
         # Add to active sessions

@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Install mcp-use package from GitHub
-RUN pip install git+https://github.com/wso2/bijira-samples.git@mcp-sample#subdirectory=external-lib/mcp-use
+RUN pip install git+https://github.com/wso2/bijira-samples.git#subdirectory=external-lib/mcp-use
 
 # Expose port 5050
 EXPOSE 5050
